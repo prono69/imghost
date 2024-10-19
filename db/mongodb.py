@@ -1,4 +1,4 @@
-# db/mongo_db.py
+# db/mongodb.py
 
 from pymongo import MongoClient
 import os
@@ -20,5 +20,9 @@ class MongoDB:
         """Get all uploaded file URLs from the database."""
         return list(self.collection.find({}, {"_id": 0, "file_url": 1}))
 
-# Initialize MongoDB instance
+# Define the function to connect to MongoDB
+def connect_to_mongodb():
+    return MongoDB(MONGODB_URL)
+
+# Optionally, you can initialize mongo_db here if needed
 mongo_db = MongoDB(MONGODB_URL)
