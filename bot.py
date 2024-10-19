@@ -1,4 +1,5 @@
 import os
+import time
 from pyrogram import Client, filters
 from dotenv import load_dotenv
 from handlers.photo_handler import handle_photo
@@ -26,7 +27,7 @@ async def start_command(client: Client, message):
 
 @app.on_message(filters.command("help"))
 async def help_cmd(client: Client, message):
-    await help_command(client, message)
+    await help_handler(client, message)
 
 @app.on_message(filters.command("return"))
 async def return_command(client: Client, message):
@@ -51,4 +52,11 @@ async def broadcast_cmd(client: Client, message):
         await message.reply("Please reply to the message you want to broadcast.")
 
 if __name__ == "__main__":
-    app.run()
+    retries = 5
+    for attempt in range(retries):
+        try:
+            app.run()
+            break  # Exit loop if successful
+        except Exception as e:
+            print(f"Error: {e}. Attempt {attempt + 1} of {retries}")
+            time.sleep(5)  # Wait before retrying
