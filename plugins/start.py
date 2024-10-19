@@ -4,7 +4,7 @@ from pyrogram import Client, filters
 
 async def start(client: Client, message):
     # Path to your bot's image
-    bot_image_url = "https://your_image_link_here"  # Replace with your bot's image URL
+    bot_image_url = "Link: https://envs.sh/pQp.jpg"  # Replace with your bot's image URL
 
     # Inline buttons
     buttons = [
