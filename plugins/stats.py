@@ -7,14 +7,14 @@ from db import mongo_db  # Import your mongo_db instance for database access
 async def stats_command(client: Client, message):
     if message.from_user.id == ADMIN_ID:
         try:
-            # Fetch actual statistics from the database
-            total_users = await mongo_db.get_total_users()  # Implement this method
-            total_uploads = await mongo_db.get_all_uploads()  # Modify to count uploads
+            # Fetch total users and uploads from the database
+            total_users = await mongo_db.get_total_users()  # Should return the count of users
+            total_uploads = await mongo_db.count_uploads()  # Should return the count of uploads
             
             await message.reply(
                 f"**Bot Statistics:**\n"
                 f"Total Users: {total_users}\n"
-                f"Total Uploads: {len(total_uploads)}",  # Assuming get_all_uploads returns a list
+                f"Total Uploads: {total_uploads}",  # Directly use the count instead of list length
                 parse_mode="Markdown"
             )
         except Exception as e:
