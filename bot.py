@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from dotenv import load_dotenv
 from handlers.photo_handler import handle_photo
 from plugins.start import start_handler
-from plugins.help import help_command
+from plugins.help import help_handler
 from plugins.stats import stats_command
 from plugins.broadcast import broadcast_command
 
