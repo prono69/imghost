@@ -1,5 +1,7 @@
 import os
 import time
+from threading import Thread
+from flask import Flask
 from pyrogram import Client, filters
 from dotenv import load_dotenv
 from handlers.photo_handler import handle_photo
@@ -16,6 +18,19 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = os.getenv('ADMIN_ID', 'your_admin_id')
 
 app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+
+# Flask app for health check
+health_app = Flask(__name__)
+
+@health_app.route('/health', methods=['GET'])
+def health_check():
+    return "Bot is running", 200
+
+def run_flask():
+    health_app.run(host="0.0.0.0", port=8080)
+
+# Run Flask server in a separate thread
+Thread(target=run_flask).start()
 
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
