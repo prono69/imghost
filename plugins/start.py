@@ -1,13 +1,8 @@
-# plugins/start.py
-
 from pyrogram import Client, filters
-from config import BOT_IMAGE_URL  # Import the BOT_IMAGE_URL from config.py
+from config import BOT_IMAGE_URL
 
-async def start_handler(client: Client, message):  # Change this to start_handler
-    # Use the bot's image URL from config.py
+async def start_handler(client: Client, message):  # Ensure it's named correctly
     bot_image_url = BOT_IMAGE_URL
-
-    # Inline buttons
     buttons = [
         [
             ("Updates", "https://t.me/Thealphabotz"),
@@ -19,7 +14,6 @@ async def start_handler(client: Client, message):  # Change this to start_handle
         ]
     ]
     
-    # Send the message with the image and buttons
     await message.reply_photo(
         photo=bot_image_url,
         caption=(
