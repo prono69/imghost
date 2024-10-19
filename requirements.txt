@@ -1,4 +1,4 @@
-pyrogram==2.0.62  # Use the latest stable version available
+pyrogram==2.0.106  # Use the latest stable version available
 httpx==0.23.3
 pymongo==4.0.1
 python-dotenv==0.20.0
