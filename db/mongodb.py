@@ -20,9 +20,9 @@ class MongoDB:
         """Get all uploaded file URLs from the database."""
         return list(self.collection.find({}, {"_id": 0, "file_url": 1}))
 
-# Define the function to connect to MongoDB
 def connect_to_mongodb():
+    """Connect to MongoDB and return the MongoDB instance."""
     return MongoDB(MONGODB_URL)
 
-# Optionally, you can initialize mongo_db here if needed
+# Initialize MongoDB instance
 mongo_db = MongoDB(MONGODB_URL)
