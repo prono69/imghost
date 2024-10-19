@@ -1,10 +1,9 @@
-# plugins/start.py
-
 from pyrogram import Client, filters
+from config import BOT_IMAGE_URL  # Import the BOT_IMAGE_URL from config.py
 
 async def start(client: Client, message):
-    # Path to your bot's image
-    bot_image_url = "Link: https://envs.sh/pQp.jpg"  # Replace with your bot's image URL
+    # Use the bot's image URL from config.py
+    bot_image_url = BOT_IMAGE_URL
 
     # Inline buttons
     buttons = [
