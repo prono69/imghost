@@ -8,17 +8,21 @@ from db.mongo_db import mongo_db
 async def upload_file_to_envs(file_content: BytesIO):
     async with httpx.AsyncClient() as client:
         files = {'file': ('image.jpg', file_content, 'image/jpeg')}
-        response = await client.post('https://envs.sh', files=files)
-
-        if response.status_code == 200:
-            return response.json()
-        else:
+        try:
+            response = await client.post('https://envs.sh', files=files)
+            response.raise_for_status()  # Raise an error for bad responses
+            return response.json()  # Attempt to parse JSON response
+        except httpx.HTTPStatusError as e:
+            print(f"HTTP error occurred: {e.response.status_code} - {e.response.text}")
+            return None
+        except Exception as e:
+            print(f"Error occurred during upload: {str(e)}")
             return None
 
 async def handle_photo(client: Client, message: Message):
     try:
         # Download the photo and get the file path
-        photo_file_path = await message.download()  # Downloading the photo
+        photo_file_path = await message.photo.download()  # Correctly downloading the photo
 
         # Read the photo content as bytes
         with open(photo_file_path, 'rb') as photo_file:
