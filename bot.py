@@ -8,7 +8,7 @@ from handlers.photo_handler import handle_photo
 from plugins.start import start_handler
 from plugins.help import help_handler
 from plugins.stats import stats_command
-from plugins.broadcast import broadcast_command  # Import your broadcast functionality if needed
+from plugins.broadcast import broadcast_command
 
 load_dotenv()
 
@@ -30,7 +30,7 @@ def run_flask():
     health_app.run(host="0.0.0.0", port=8080)
 
 # Run Flask server in a separate thread
-Thread(target=run_flask).start()
+Thread(target=run_flask, daemon=True).start()
 
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
@@ -79,11 +79,11 @@ async def broadcast_cmd(client: Client, message):
 if __name__ == "__main__":
     # Add a delay before starting your bot
     time.sleep(10)
-    
+
     retries = 5
     for attempt in range(retries):
         try:
-            app.run()
+            app.run()  # Start Pyrogram client
             break  # Exit loop if successful
         except Exception as e:
             print(f"Error: {e}. Attempt {attempt + 1} of {retries}")
