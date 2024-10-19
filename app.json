@@ -1,0 +1,28 @@
+{
+  "name": "Image Hosting Bot",
+  "description": "A powerful Telegram bot for uploading images and receiving links.",
+  "env": {
+    "API_ID": {
+      "description": "Your Telegram API ID",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Your Telegram API Hash",
+      "required": true
+    },
+    "BOT_TOKEN": {
+      "description": "Your Telegram Bot Token",
+      "required": true
+    },
+    "MONGO_URI": {
+      "description": "Your MongoDB URI",
+      "required": true
+    }
+  },
+  "scripts": {
+    "postdeploy": "pip install -r requirements.txt"
+  },
+  "addons": [
+    "mongolab"  // Optional: If you want to use a MongoDB add-on on Heroku
+  ]
+}
