@@ -1,7 +1,9 @@
+# plugins/start.py
+
 from pyrogram import Client, filters
 from config import BOT_IMAGE_URL  # Import the BOT_IMAGE_URL from config.py
 
-async def start(client: Client, message):
+async def start_handler(client: Client, message):  # Change this to start_handler
     # Use the bot's image URL from config.py
     bot_image_url = BOT_IMAGE_URL
 
