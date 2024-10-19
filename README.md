@@ -30,7 +30,10 @@ Click the button below to see various deployment options:
    - API_HASH
    - BOT_TOKEN
    - MONGO_URI
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/yourusername/imagehost)
+<a href="https://heroku.com/deploy?template=https://github.com/utkarshdubey2008/imagehost">
+    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku" style="width: 200px; height: auto;">
+</a>
+
 
 ### 🐳 Docker Deployment
 
@@ -108,9 +111,8 @@ If you encounter any issues or need help, please reach out to us via our Support
 
 ## 🔗 Links
 
-GitHub Repository: https://github.com/yourusername/imagehost
+GitHub Repository: https://github.com/utkarshdubey2008/imagehost
 
-Alpha Bots Official Website: https://alphabots_website_link_here
-
+[updates channel](https://t.me/thealphabotz)
 
 Thank you for using the Image Hosting Bot! Happy sharing! 🎉
