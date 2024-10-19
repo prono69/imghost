@@ -47,7 +47,7 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 
 ## ☁️ Koyeb Deployment
 
-1. Create a new Koyeb app. ☁️
+1. Click on the button below 👇.☁️
 
 
 2. Set your environment variables as mentioned above.
@@ -55,7 +55,9 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 
 3. Use the button below to deploy to Koyeb:
 
-<!-- Replace with Koyeb button image URL -->
+<a href="https://app.koyeb.com/deploy?repo=https://github.com/yourusername/imagehost"> 
+    <img src="https://www.koyeb.com/static/img/deploy.svg" alt="Deploy to Koyeb" />
+</a>
 
 ## 🛠️ Installation
 
