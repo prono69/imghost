@@ -6,7 +6,7 @@ from handlers.photo_handler import handle_photo
 from plugins.start import start_handler
 from plugins.help import help_handler
 from plugins.stats import stats_command
-from plugins.broadcast import broadcast_command
+from plugins.broadcast import broadcast_command  # Import your broadcast functionality if needed
 
 load_dotenv()
 
@@ -47,11 +47,24 @@ async def broadcast_cmd(client: Client, message):
         await message.reply("Broadcasting message...")  # Confirmation message
         
         # Implement logic to send the broadcast message to user IDs here
+        user_ids = []  # List of user IDs to send the broadcast message to
+
+        for user_id in user_ids:
+            try:
+                if media:
+                    await client.send_photo(user_id, media.file_id, caption=content)
+                else:
+                    await client.send_message(user_id, content)
+            except Exception as e:
+                print(f"Failed to send message to {user_id}: {e}")
 
     else:
         await message.reply("Please reply to the message you want to broadcast.")
 
 if __name__ == "__main__":
+    # Add a delay before starting your bot
+    time.sleep(10)
+    
     retries = 5
     for attempt in range(retries):
         try:
