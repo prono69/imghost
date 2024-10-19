@@ -9,14 +9,18 @@ from plugins.start import start_handler
 from plugins.help import help_handler
 from plugins.stats import stats_command
 from plugins.broadcast import broadcast_command
+from db import mongo_db  # Import your mongo_db instance for database access
 
+# Load environment variables
 load_dotenv()
 
+# Retrieve bot credentials and admin ID from environment variables
 API_ID = os.getenv('API_ID', 'your_api_id')
 API_HASH = os.getenv('API_HASH', 'your_api_hash')
 BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = os.getenv('ADMIN_ID', 'your_admin_id')
 
+# Create Pyrogram client
 app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 # Flask app for health check
@@ -32,26 +36,44 @@ def run_flask():
 # Run Flask server in a separate thread
 Thread(target=run_flask, daemon=True).start()
 
+# Photo handler
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
     await handle_photo(client, message)
 
+# Start command handler
 @app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
     await start_handler(client, message)
 
+# Help command handler
 @app.on_message(filters.command("help"))
 async def help_cmd(client: Client, message):
     await help_handler(client, message)
 
+# Return command handler
 @app.on_message(filters.command("return"))
 async def return_command(client: Client, message):
     await start_handler(client, message)
 
+# Stats command handler
 @app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
-    await stats_command(client, message)
+    try:
+        total_users = await mongo_db.get_total_users()  # Implement this method
+        total_uploads = await mongo_db.get_all_uploads()  # Implement to count uploads
+        
+        await message.reply(
+            f"**Bot Statistics:**\n"
+            f"Total Users: {total_users}\n"
+            f"Total Uploads: {len(total_uploads)}",  # Assuming get_all_uploads returns a list
+            parse_mode="Markdown"
+        )
+    except Exception as e:
+        await message.reply("An error occurred while fetching statistics.")
+        print(f"Error fetching stats: {e}")  # Log the error for debugging
 
+# Broadcast command handler
 @app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
     if message.reply_to_message:
@@ -61,8 +83,8 @@ async def broadcast_cmd(client: Client, message):
         
         await message.reply("Broadcasting message...")  # Confirmation message
         
-        # Implement logic to send the broadcast message to user IDs here
-        user_ids = []  # List of user IDs to send the broadcast message to
+        # Fetch user IDs from your database
+        user_ids = await mongo_db.get_all_user_ids()  # Implement this method
 
         for user_id in user_ids:
             try:
