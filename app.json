@@ -21,6 +21,10 @@
     "BOT_IMAGE_URL": {  // Added to configure the bot image
       "description": "URL for the bot's image",
       "required": false
+    },
+    "ADMIN_ID": {  // Added admin ID
+      "description": "Your Telegram Admin ID",
+      "required": true
     }
   },
   "scripts": {
