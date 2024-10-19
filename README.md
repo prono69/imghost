@@ -1,58 +1,43 @@
-🖼️ Image Hosting Bot
+# 🖼️ Image Hosting Bot
 
 Welcome to the Image Hosting Bot, a powerful and user-friendly Telegram bot designed to help you easily upload images and receive instant links to share with your friends and family! 🚀
 
-👨‍💻 Developers
+## 👨‍💻 Developers
 
-This bot is brought to you by Alpha Bots, a passionate team dedicated to creating innovative and efficient tools for the community. We strive to make technology accessible and enjoyable for everyone! 🌟
+This bot is brought to you by **Alpha Bots**, a passionate team dedicated to creating innovative and efficient tools for the community. We strive to make technology accessible and enjoyable for everyone! 🌟
 
-✨ Features
+## ✨ Features
 
-Seamless Image Uploads: Upload images directly to the bot and get a shareable link instantly! 📤
+- **Seamless Image Uploads:** Upload images directly to the bot and get a shareable link instantly! 📤
+- **User-Friendly Interface:** With inline buttons for help and support, using the bot is a breeze. 🛠️
+- **MongoDB Integration:** All uploaded image URLs are stored securely for easy access. 🔒
 
-User-Friendly Interface: With inline buttons for help and support, using the bot is a breeze. 🛠️
+## 🌍 Languages Used
 
-MongoDB Integration: All uploaded image URLs are stored securely for easy access. 🔒
+- **Python:** The primary language used for development, providing a robust and flexible framework. 🐍
 
-
-🌍 Languages Used
-
-Python: The primary language used for development, providing a robust and flexible framework. 🐍
-
-
-🚀 Deployment
+## 🚀 Deployment
 
 Click the button below to see various deployment options:
 
-Deploy Now! 🖱️
+**Deploy Now!** 🖱️
 
-🌈 Heroku Deployment
+### 🌈 Heroku Deployment
 
 1. Create a new Heroku app. 🌟
-
-
 2. Set your environment variables:
-
-API_ID
-
-API_HASH
-
-BOT_TOKEN
-
-MONGO_URI
-
-
-
+   - API_ID
+   - API_HASH
+   - BOT_TOKEN
+   - MONGO_URI
 3. Click the button below to deploy to Heroku:
+   <!-- Replace with Heroku button image URL -->
 
-<!-- Replace with Heroku button image URL -->
-
-🐳 Docker Deployment
+### 🐳 Docker Deployment
 
 1. Build your Docker image:
-
-docker build -t imagehost .
-
+   ```bash
+   docker build -t imagehost .
 
 2. Run your Docker container:
 
@@ -60,7 +45,7 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 
 
 
-☁️ Koyeb Deployment
+## ☁️ Koyeb Deployment
 
 1. Create a new Koyeb app. ☁️
 
@@ -72,9 +57,9 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 
 <!-- Replace with Koyeb button image URL -->
 
-🛠️ Installation
+## 🛠️ Installation
 
-📦 Prerequisites
+## 📦 Prerequisites
 
 Make sure you have the following installed:
 
@@ -83,7 +68,7 @@ Python 3.9 or later 🐍
 pip (Python package installer) 📦
 
 
-⚙️ Setup Instructions
+## ⚙️ Setup Instructions
 
 1. Clone this repository:
 
@@ -114,19 +99,19 @@ python bot.py
 
 
 
-🤝 Contributing
+## 🤝 Contributing
 
 We welcome contributions! If you want to improve the bot or add new features, feel free to fork the repository and submit a pull request. 🙌
 
-📞 Support
+## 📞 Support
 
 If you encounter any issues or need help, please reach out to us via our Support Channel. 💬
 
-🔗 Links
+## 🔗 Links
 
 GitHub Repository: https://github.com/yourusername/imagehost
 
 Alpha Bots Official Website: https://alphabots_website_link_here
 
 
-Thank you for using the Image Hosting Bot! Happy sharing!🌬️
+Thank you for using the Image Hosting Bot! Happy sharing! 🎉
