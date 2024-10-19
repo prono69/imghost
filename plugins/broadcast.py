@@ -10,15 +10,20 @@ async def broadcast_command(client: Client, message):
             reply_message = message.reply_to_message
             
             # Fetch user IDs from the database
-            user_ids = [user['user_id'] for user in mongo_db.users_collection.find({}, {"user_id": 1})]  # Assuming user_id is stored in the 'users' collection
+            user_ids = [user['user_id'] for user in mongo_db.users_collection.find({}, {"user_id": 1})]
             
+            successful_sends = 0
+            failed_sends = 0
+
             # Handle photo broadcasts
             if reply_message.photo:
                 for user_id in user_ids:
                     try:
                         await client.send_photo(user_id, photo=reply_message.photo.file_id, caption=reply_message.caption or "")
+                        successful_sends += 1
                     except Exception as e:
                         print(f"Failed to send photo to {user_id}: {e}")
+                        failed_sends += 1
 
             # Handle text message broadcasts
             elif reply_message.text:
@@ -26,19 +31,25 @@ async def broadcast_command(client: Client, message):
                 for user_id in user_ids:
                     try:
                         await client.send_message(user_id, broadcast_text)
+                        successful_sends += 1
                     except Exception as e:
                         print(f"Failed to send message to {user_id}: {e}")
+                        failed_sends += 1
 
             # Handle documents or other media types
             elif reply_message.document:
                 for user_id in user_ids:
                     try:
                         await client.send_document(user_id, document=reply_message.document.file_id, caption=reply_message.caption or "")
+                        successful_sends += 1
                     except Exception as e:
                         print(f"Failed to send document to {user_id}: {e}")
+                        failed_sends += 1
 
             else:
                 await message.reply("This message type is not supported for broadcasting.")
+
+            await message.reply(f"Broadcast completed: {successful_sends} messages sent, {failed_sends} failed.")
         else:
             await message.reply("Please reply to a message to broadcast it.")
     else:
