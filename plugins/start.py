@@ -3,13 +3,28 @@
 from pyrogram import Client, filters
 
 async def start(client: Client, message):
+    # Path to your bot's image
+    bot_image_url = "https://your_image_link_here"  # Replace with your bot's image URL
+
+    # Inline buttons
     buttons = [
-        [("Support", "support"), ("Owner Channel", "owner_channel")],
-        [("Updates Channel", "updates_channel"), ("Help", "help")]
+        [
+            ("Updates", "https://t.me/Thealphabotz"),
+            ("Support", "https://t.me/thealphabotz")
+        ],
+        [
+            ("Help", "help"),
+            ("Source", "https://github.com/utkarshdubey2008/imagehost")
+        ]
     ]
-    await message.reply(
-        "Welcome to ImageHost Bot! Send me an image, and I'll upload it for you.\n\n"
-        "I can help you host your images and provide you with a shareable link.\n"
-        "Feel free to reach out if you have any questions!",
+    
+    # Send the message with the image and buttons
+    await message.reply_photo(
+        photo=bot_image_url,
+        caption=(
+            "Welcome to ImageHost Bot! Send me an image, and I'll upload it for you.\n\n"
+            "I can help you host your images and provide you with a shareable link.\n"
+            "Feel free to reach out if you have any questions!"
+        ),
         reply_markup={"inline_keyboard": buttons}
     )
