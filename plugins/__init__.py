@@ -2,12 +2,12 @@
 
 from .start import start_handler       # Import start_handler from start.py
 from .help import help_handler         # Import help_handler from help.py
-from .stats import stats_handler       # Import stats_handler from stats.py
-from .brodcast import broadcast_handler  # Import broadcast_handler from brodcast.py
+from .stats import stats_command       # Import stats_handler from stats.py
+from .brodcast import broadcast_command  # Import broadcast_handler from brodcast.py
 
 __all__ = [
     'start_handler', 
     'help_handler', 
-    'stats_handler', 
-    'broadcast_handler'  # Add all handlers to __all__
+    'stats_command', 
+    'broadcast_command'  # Add all handlers to __all__
 ]
