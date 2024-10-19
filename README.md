@@ -55,9 +55,7 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 
 3. Use the button below to deploy to Koyeb:
 
-<a href="https://app.koyeb.com/deploy?repo=https://github.com/yourusername/imagehost"> 
-    <img src="https://www.koyeb.com/static/img/deploy.svg" alt="Deploy to Koyeb" />
-</a>
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=imagehost&type=git&repository=utkarshdubey2008%2Fimagehost&branch=main&builder=buildpack&env%5B%5D=&ports=8000%3Bhttp%3B%2F)
 
 ## 🛠️ Installation
 
