@@ -1,11 +1,13 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
-# Install NTP to keep the time synchronized
-RUN apt-get update && apt-get install -y ntp && service ntp start
-
 # Set the working directory
 WORKDIR /app
+
+# Install NTP to keep the time synchronized and clean up
+RUN apt-get update && apt-get install -y ntp \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file
 COPY requirements.txt .
