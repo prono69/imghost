@@ -18,7 +18,7 @@ async def upload_file_to_envs(file_content: BytesIO):
 async def handle_photo(client: Client, message: Message):
     try:
         # Download the photo and get the file path
-        photo_file_path = await message.photo.download()
+        photo_file_path = await message.download()  # Downloading the photo
 
         # Read the photo content as bytes
         with open(photo_file_path, 'rb') as photo_file:
