@@ -24,14 +24,13 @@ Click the button below to see various deployment options:
 
 ### 🌈 Heroku Deployment
 
-1. Create a new Heroku app. 🌟
+1. click on deploy button. 🌟
 2. Set your environment variables:
    - API_ID
    - API_HASH
    - BOT_TOKEN
    - MONGO_URI
-3. Click the button below to deploy to Heroku:
-   <!-- Replace with Heroku button image URL -->
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/yourusername/imagehost)
 
 ### 🐳 Docker Deployment
 
