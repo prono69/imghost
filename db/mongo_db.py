@@ -1,5 +1,3 @@
-# db/mongodb.py
-
 from pymongo import MongoClient
 import os
 
