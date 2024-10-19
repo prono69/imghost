@@ -1,5 +1,3 @@
-# handlers/__init__.py
+# handlers/photo_handler.py
 
-from .photo_handler import handle_photo  # Importing photo handling function
-
-__all__ = ['handle_photo']  # What can be imported with 'from handlers import *'
+from db import save_image_url  # This should work if your __init__.py in db is set up correctly
