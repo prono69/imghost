@@ -1,5 +1,3 @@
-# handlers/photo_handler.py
-
 import httpx
 from io import BytesIO
 from pyrogram import Client, filters
@@ -19,11 +17,12 @@ async def upload_file_to_envs(file_content: BytesIO):
 
 async def handle_photo(client: Client, message: Message):
     try:
-        # Download the photo
-        photo_file = await message.photo.download()
-        
-        # Prepare file content for upload
-        photo_bytes = BytesIO(open(photo_file, 'rb').read())
+        # Download the photo and get the file path
+        photo_file_path = await message.photo.download()
+
+        # Read the photo content as bytes
+        with open(photo_file_path, 'rb') as photo_file:
+            photo_bytes = BytesIO(photo_file.read())
 
         # Upload the photo to envs.sh
         response_data = await upload_file_to_envs(photo_bytes)
