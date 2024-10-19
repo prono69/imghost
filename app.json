@@ -14,11 +14,11 @@
       "description": "Your Telegram Bot Token",
       "required": true
     },
-    "MONGODB_URI": {  // Changed to MONGODB_URL to match your config
+    "MONGODB_URL": {  // Updated to match your config
       "description": "Your MongoDB URI",
       "required": true
     },
-    "BOT_IMAGE_URL": {  // Optional: Add this if you want to configure the bot image
+    "BOT_IMAGE_URL": {  // Added to configure the bot image
       "description": "URL for the bot's image",
       "required": false
     }
@@ -29,7 +29,7 @@
   "addons": [
     "mongolab"  // Optional: If you want to use a MongoDB add-on on Heroku
   ],
-  "website": "https://github.com/utkarshdubey2008/imagehost",  // Optional: Link to your GitHub repository
+  "website": "https://github.com/utkarshdubey2008/imagehost",  // Link to your GitHub repository
   "keywords": [
     "Telegram",
     "bot",
