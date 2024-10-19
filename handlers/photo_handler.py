@@ -21,8 +21,9 @@ async def upload_file_to_envs(file_content: BytesIO):
 
 async def handle_photo(client: Client, message: Message):
     try:
-        # Download the photo and get the file path
-        photo_file_path = await message.photo.download()  # Correctly downloading the photo
+        # Get the largest available photo size and download it
+        largest_photo = message.photo[-1]  # Get the last item for the highest resolution
+        photo_file_path = await largest_photo.download()  # Downloading the largest photo
 
         # Read the photo content as bytes
         with open(photo_file_path, 'rb') as photo_file:
