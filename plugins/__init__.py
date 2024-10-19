@@ -1,6 +1,13 @@
 # plugins/__init__.py
 
-from .start import start_handler  # Assuming you have a start_handler function in start.py
-from .help import help_handler    # Assuming you have a help_handler function in help.py
+from .start import start_handler       # Import start_handler from start.py
+from .help import help_handler         # Import help_handler from help.py
+from .stats import stats_handler       # Import stats_handler from stats.py
+from .brodcast import broadcast_handler  # Import broadcast_handler from brodcast.py
 
-__all__ = ['start_handler', 'help_handler']  # Specifies what should be imported when using 'from plugins import *'
+__all__ = [
+    'start_handler', 
+    'help_handler', 
+    'stats_handler', 
+    'broadcast_handler'  # Add all handlers to __all__
+]
