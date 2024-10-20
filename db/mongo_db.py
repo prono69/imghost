@@ -1,15 +1,15 @@
 import os
-from motor.motor_asyncio import AsyncIOMotorClient  # Use AsyncIOMotorClient for async operations
+from motor.motor_asyncio import AsyncIOMotorClient  
 
-# Load environment variables
+
 MONGODB_URL = os.getenv('MONGODB_URL', 'your_mongodb_url')
 
 class MongoDB:
     def __init__(self, url):
         self.client = AsyncIOMotorClient(url)
-        self.db = self.client['imagehost_db']  # Database name
-        self.uploads_collection = self.db['uploads']  # Collection for uploads
-        self.users_collection = self.db['users']      # Collection for users
+        self.db = self.client['imagehost_db']  
+        self.uploads_collection = self.db['uploads']  
+        self.users_collection = self.db['users']      
 
     async def insert_upload(self, file_url):
         """Insert uploaded file URL into the database."""
@@ -63,7 +63,7 @@ class MongoDB:
     async def get_total_users(self):
         """Get the total number of users."""
         try:
-            return await self.count_users()  # Reuse the count_users method
+            return await self.count_users()  
         except Exception as e:
             print(f"Error fetching total users: {e}")
             return 0
@@ -71,9 +71,9 @@ class MongoDB:
     async def get_all_user_ids(self):
         """Get all user IDs from the users collection."""
         try:
-            cursor = self.users_collection.find({}, {"_id": 0, "user_id": 1})  # Adjust according to your schema
-            user_ids = await cursor.to_list(length=None)  # Convert cursor to a list
-            return [user['user_id'] for user in user_ids]  # Extract user_ids
+            cursor = self.users_collection.find({}, {"_id": 0, "user_id": 1})  
+            user_ids = await cursor.to_list(length=None)  
+            return [user['user_id'] for user in user_ids]  
         except Exception as e:
             print(f"Error fetching user IDs: {e}")
             return []
@@ -82,5 +82,5 @@ async def connect_to_mongodb():
     """Connect to MongoDB and return the MongoDB instance."""
     return MongoDB(MONGODB_URL)
 
-# Initialize MongoDB instance
+
 mongo_db = MongoDB(MONGODB_URL)
