@@ -1,17 +1,13 @@
 from pyrogram import Client, filters
 from config import ADMIN_ID
-from db.mongo_db import mongo_db  # Import the MongoDB instance
+from db import mongo_db  # Import the MongoDB instance
 
 async def broadcast_command(client: Client, message):
     if message.from_user.id == ADMIN_ID:
-        # Check if the message is a reply
         if message.reply_to_message:
-            # Get the message to broadcast
             reply_message = message.reply_to_message
-            
-            # Fetch user IDs from the database
             user_ids = [user['user_id'] for user in mongo_db.users_collection.find({}, {"user_id": 1})]
-            
+
             successful_sends = 0
             failed_sends = 0
 
@@ -36,7 +32,7 @@ async def broadcast_command(client: Client, message):
                         print(f"Failed to send message to {user_id}: {e}")
                         failed_sends += 1
 
-            # Handle documents or other media types
+            # Handle documents
             elif reply_message.document:
                 for user_id in user_ids:
                     try:
