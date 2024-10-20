@@ -24,7 +24,7 @@ async def upload_file_to_envs(file_content: BytesIO):
 @Client.on_message(filters.photo)
 async def handle_photo(client: Client, message: Message):
     try:
-        temp_message = await message.reply("⚡ Processing your image...")
+        temp_message = await message.reply("⚡")
         photo_file_path = await message.download()
 
         with open(photo_file_path, 'rb') as f:
@@ -34,8 +34,8 @@ async def handle_photo(client: Client, message: Message):
 
         if response_data:
             formatted_link = f"Link: {response_data}\nClick to copy: `{response_data}`\n\n"
-            credit_message = "> Bot by: @thealphabotz"
-            final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
+            credit_message = "```Bot by: @thealphabotz```"
+            final_message = f"Your image uploaded successfully .\n\n{formatted_link}{credit_message}"
             await temp_message.edit(final_message)
             await mongo_db.insert_upload(response_data)
         else:
