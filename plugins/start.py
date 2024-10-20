@@ -7,12 +7,12 @@ async def start_handler(client: Client, message):
     bot_image_url = BOT_IMAGE_URL
     buttons = [
         [
-            InlineKeyboardButton("Updates", url="https://t.me/Thealphabotz"),  # Updates button
-            InlineKeyboardButton("Support", url="https://t.me/thealphabotz")
+            InlineKeyboardButton("Updates🔊", url="https://t.me/Thealphabotz"),  
+            InlineKeyboardButton("Support🧑‍🔧", url="https://t.me/alphabotzchat")
         ],
         [
-            InlineKeyboardButton("Help", callback_data="help"),  # Help button now directs to the help handler
-            InlineKeyboardButton("Source", url="https://github.com/utkarshdubey2008/imagehost")
+            InlineKeyboardButton("donate🥺", url="https://t.me/adarsh2626"),  
+            InlineKeyboardButton("Source", url="https://t.me/alphabotzchat/599")
         ]
     ]
     
