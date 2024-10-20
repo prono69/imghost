@@ -37,11 +37,18 @@ Thread(target=run_flask, daemon=True).start()
 # Photo handler
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
-    await handle_photo(client, message)
+    # Handle photo and update uploads in the database
+    response_data = await handle_photo(client, message)
+    
+    # Ensure this is awaited
+    await mongo_db.insert_upload(response_data)  # Update this to your actual function
 
 # Start command handler
 @app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
+    # Insert or update user info in the database
+    user_id = message.from_user.id
+    await mongo_db.add_user(user_id)  # Assuming you have this function
     await start_handler(client, message)
 
 # Help command handler
