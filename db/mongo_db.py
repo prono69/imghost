@@ -41,6 +41,17 @@ class MongoDB:
         except Exception as e:
             print(f"Error inserting user: {e}")
 
+    async def add_or_update_user(self, user_data):
+        """Add a new user or update existing user data."""
+        try:
+            await self.users_collection.update_one(
+                {"user_id": user_data["user_id"]},
+                {"$set": user_data},
+                upsert=True
+            )
+        except Exception as e:
+            print(f"Error updating user data: {e}")
+
     async def count_users(self):
         """Get the total count of users."""
         try:
