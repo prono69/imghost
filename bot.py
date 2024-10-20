@@ -65,12 +65,11 @@ async def stats_cmd(client: Client, message):
             f"**Bot Statistics:**\n"
             f"Total Users: {total_users}\n"
             f"Total Uploads: {len(total_uploads)}",  # Assuming get_all_uploads returns a list
-            parse_mode="MarkdownV2"  # Changed from "Markdown" to "MarkdownV2"
+            parse_mode="Markdown"  # Changed back to Markdown
         )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")  # Log the error for debugging
-
 # Broadcast command handler
 @app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
