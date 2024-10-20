@@ -134,21 +134,18 @@ We welcome contributions! If you want to improve the bot or add new features, fe
 
 ## 📞 Support
 
-If you encounter any issues or need help, please reach out to us via our Support Channel. 💬
+If you encounter any issues or need help, please reach out to us via our [Support](https://t.me/alphabotzchat). 💬
 
 
----
 
-🔗 Links
+## 🔗 Links
 
-GitHub Repository: https://github.com/utkarshdubey2008/imagehost
+[GitHub Repository](https://github.com/utkarshdubey2008/imagehost)
 
-Updates Channel
+How to deploy : 
+
+[Updates Channel](https://t.me/Thealphabotz)
 
 
 Thank you for using the Image Hosting Bot! Happy sharing! 🎉
 
-
----
-
-This version includes both the Support link and Updates Channel as requested.
