@@ -1,14 +1,16 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-async def help_handler(client: Client, message):
+@Client.on_message(filters.command("help"))
+async def command_help(client: Client, message):
+    # Create help menu buttons
     buttons = [
-        [InlineKeyboardButton("Return", callback_data="return")],
         [InlineKeyboardButton("Close", callback_data="close")]
     ]
     
-    reply_markup = InlineKeyboardMarkup(buttons)  # Create InlineKeyboardMarkup instance
+    reply_markup = InlineKeyboardMarkup(buttons)
 
+    # Send help menu message
     await message.reply(
         "Here are some commands you can use:\n"
         "/start - Start the bot\n"
@@ -16,5 +18,5 @@ async def help_handler(client: Client, message):
         "/stats - View bot statistics (Admin only)\n"
         "/broadcast - Broadcast a message to all users (Admin only)\n"
         "Send me a photo to upload it and I'll provide a shareable link.\n",
-        reply_markup=reply_markup  # Pass the properly structured reply markup
+        reply_markup=reply_markup
     )
