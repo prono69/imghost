@@ -37,11 +37,8 @@ Thread(target=run_flask, daemon=True).start()
 # Photo handler
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
-    # Handle photo and update uploads in the database
-    response_data = await handle_photo(client, message)
-    
-    # Ensure this is awaited
-    await mongo_db.insert_upload(response_data)
+    response_data = await handle_photo(client, message)  # Handle the photo upload
+    await mongo_db.insert_upload(response_data)  # Insert upload data into the database
 
 # Start command handler
 @app.on_message(filters.command("start"))
@@ -49,16 +46,11 @@ async def start_command(client: Client, message):
     user_id = message.from_user.id
     user_data = {
         "user_id": user_id,
+        "username": message.from_user.username,
         "first_name": message.from_user.first_name,
         "last_name": message.from_user.last_name,
-        "username": message.from_user.username,
-        "upload_count": 0,  # Default upload count
-        "start_time": message.date  # Record when the user started
     }
-    
-    # Add or update user info in the database
-    await mongo_db.add_or_update_user(user_data)  # New method to handle this
-
+    await mongo_db.add_or_update_user(user_data)  # Add or update user info in the database
     await start_handler(client, message)
 
 # Help command handler
@@ -82,7 +74,7 @@ async def stats_cmd(client: Client, message):
             f"Bot Statistics:\n"
             f"Total Users: {total_users}\n"
             f"Total Uploads: {len(total_uploads)}"  # Assuming get_all_uploads returns a list
-        )  # Removed parse_mode
+        )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")  # Log the error for debugging
