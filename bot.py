@@ -1,4 +1,5 @@
 import os
+import json
 import time
 from threading import Thread
 from flask import Flask
@@ -34,15 +35,43 @@ def run_flask():
 # Run Flask server in a separate thread
 Thread(target=run_flask, daemon=True).start()
 
+# File to store user data
+USER_DATA_FILE = "userdata.json"
+
+def load_user_data():
+    """Load user data from a JSON file."""
+    if os.path.exists(USER_DATA_FILE):
+        with open(USER_DATA_FILE, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_user_data(data):
+    """Save user data to a JSON file."""
+    with open(USER_DATA_FILE, 'w') as f:
+        json.dump(data, f, indent=4)
+
+# Load existing user data
+user_data = load_user_data()
+
 # Photo handler
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
     await handle_photo(client, message)
+    user_id = message.from_user.id
+    if str(user_id) not in user_data:
+        user_data[str(user_id)] = {'uploads': 0}
+        save_user_data(user_data)
+    user_data[str(user_id)]['uploads'] += 1  # Increment upload count
+    save_user_data(user_data)
 
 # Start command handler
 @app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
     await start_handler(client, message)
+    user_id = message.from_user.id
+    if str(user_id) not in user_data:
+        user_data[str(user_id)] = {'uploads': 0}
+        save_user_data(user_data)
 
 # Help command handler
 @app.on_message(filters.command("help"))
@@ -58,18 +87,19 @@ async def return_command(client: Client, message):
 @app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
     try:
-        total_users = await mongo_db.get_total_users()
-        total_uploads = await mongo_db.get_all_uploads()
+        total_users = len(user_data)
+        total_uploads = sum(user['uploads'] for user in user_data.values())
 
         await message.reply(
             f"<b>Bot Statistics:</b>\n"
             f"Total Users: {total_users}\n"
-            f"Total Uploads: {len(total_uploads)}",  # Assuming get_all_uploads returns a list
-            parse_mode="HTML"  # Changed to HTML
+            f"Total Uploads: {total_uploads}",
+            parse_mode="HTML"
         )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
-        print(f"Error fetching stats: {e}")  # Log the error for debugging
+        print(f"Error fetching stats: {e}")
+
 # Broadcast command handler
 @app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
@@ -80,8 +110,8 @@ async def broadcast_cmd(client: Client, message):
         
         await message.reply("Broadcasting message...")  # Confirmation message
         
-        # Fetch user IDs from your database
-        user_ids = await mongo_db.get_all_user_ids()
+        # Get all user IDs from user data
+        user_ids = [int(user_id) for user_id in user_data.keys()]
 
         for user_id in user_ids:
             try:
