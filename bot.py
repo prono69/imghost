@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 from handlers.photo_handler import handle_photo
 from plugins.start import start_handler
 from plugins.help import help_handler
-from plugins.stats import stats_command
-from plugins.broadcast import broadcast_command
 from db import mongo_db  # Import your mongo_db instance for database access
 
 # Load environment variables
@@ -18,7 +16,7 @@ load_dotenv()
 API_ID = os.getenv('API_ID', 'your_api_id')
 API_HASH = os.getenv('API_HASH', 'your_api_hash')
 BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
-ADMIN_ID = os.getenv('ADMIN_ID', 'your_admin_id')
+ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
 
 # Create Pyrogram client
 app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
@@ -60,9 +58,9 @@ async def return_command(client: Client, message):
 @app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
     try:
-        total_users = await mongo_db.get_total_users()  # Implement this method
-        total_uploads = await mongo_db.get_all_uploads()  # Implement to count uploads
-        
+        total_users = await mongo_db.get_total_users()
+        total_uploads = await mongo_db.get_all_uploads()
+
         await message.reply(
             f"**Bot Statistics:**\n"
             f"Total Users: {total_users}\n"
@@ -84,7 +82,7 @@ async def broadcast_cmd(client: Client, message):
         await message.reply("Broadcasting message...")  # Confirmation message
         
         # Fetch user IDs from your database
-        user_ids = await mongo_db.get_all_user_ids()  # Implement this method
+        user_ids = await mongo_db.get_all_user_ids()
 
         for user_id in user_ids:
             try:
