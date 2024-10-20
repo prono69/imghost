@@ -1,6 +1,6 @@
 pyrogram==2.0.106
 httpx==0.23.3
-pymongo==4.1.1
+pymongo==4.10.1
 python-dotenv==0.20.0
 tgcrypto
 dnspython
