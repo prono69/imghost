@@ -37,21 +37,31 @@ Thread(target=run_flask, daemon=True).start()
 # Photo handler
 @app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
-    response_data = await handle_photo(client, message)  # Handle the photo upload
-    await mongo_db.insert_upload(response_data)  # Insert upload data into the database
+    # Handle photo and update uploads in the database
+    response_data = await handle_photo(client, message)
+    
+    # Ensure this is awaited
+    await mongo_db.insert_upload(response_data)  # Update this to your actual function
 
 # Start command handler
 @app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
+    print("Received start command from:", message.from_user.id)
+
     user_id = message.from_user.id
     user_data = {
         "user_id": user_id,
         "username": message.from_user.username,
-        "first_name": message.from_user.first_name,
-        "last_name": message.from_user.last_name,
+        # Add other user fields if necessary
     }
-    await mongo_db.add_or_update_user(user_data)  # Add or update user info in the database
-    await start_handler(client, message)
+    
+    try:
+        await mongo_db.add_or_update_user(user_data)  # Ensure this method exists in your MongoDB class
+        print("User data updated:", user_data)
+    except Exception as e:
+        print("Error updating user data:", e)
+    
+    await start_handler(client, message)  # Assuming you have a start_handler function defined
 
 # Help command handler
 @app.on_message(filters.command("help"))
@@ -74,7 +84,7 @@ async def stats_cmd(client: Client, message):
             f"Bot Statistics:\n"
             f"Total Users: {total_users}\n"
             f"Total Uploads: {len(total_uploads)}"  # Assuming get_all_uploads returns a list
-        )
+        )  # Removed parse_mode
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")  # Log the error for debugging
