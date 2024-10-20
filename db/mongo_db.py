@@ -57,6 +57,16 @@ class MongoDB:
             print(f"Error fetching total users: {e}")
             return 0
 
+    async def get_all_user_ids(self):
+        """Get all user IDs from the users collection."""
+        try:
+            cursor = self.users_collection.find({}, {"_id": 0, "user_id": 1})  # Adjust according to your schema
+            user_ids = await cursor.to_list(length=None)  # Convert cursor to a list
+            return [user['user_id'] for user in user_ids]  # Extract user_ids
+        except Exception as e:
+            print(f"Error fetching user IDs: {e}")
+            return []
+
 async def connect_to_mongodb():
     """Connect to MongoDB and return the MongoDB instance."""
     return MongoDB(MONGODB_URL)
