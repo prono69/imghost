@@ -6,5 +6,5 @@ tgcrypto
 dnspython
 Flask==2.3.2
 gunicorn==20.1.0
-motor==3.1.1
+motor==3.6.0
 setuptools>=68.0.0
