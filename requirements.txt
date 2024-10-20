@@ -1,9 +1,10 @@
-pyrogram==2.0.106  # Use the latest stable version available
+pyrogram==2.0.106
 httpx==0.23.3
 pymongo==4.0.1
 python-dotenv==0.20.0
-tgcrypto  # Add this for better performance
-dnspython  # Required for mongodb+srv
-Flask==2.3.2  # Specify the version of Flask you want to use
+tgcrypto
+dnspython
+Flask==2.3.2
 gunicorn==20.1.0
-motor
+motor==3.1.1
+setuptools>=68.0.0
