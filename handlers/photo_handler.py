@@ -3,7 +3,7 @@ from io import BytesIO
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from httpx import ConnectError, HTTPStatusError
-from db.mongo_db import mongo_db  # MongoDB handler
+from db.mongo_db import mongo_db  
 
 async def upload_file_to_envs(file_content: BytesIO):
     async with httpx.AsyncClient() as client:
