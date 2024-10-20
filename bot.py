@@ -41,14 +41,24 @@ async def photo_handler(client: Client, message):
     response_data = await handle_photo(client, message)
     
     # Ensure this is awaited
-    await mongo_db.insert_upload(response_data)  # Update this to your actual function
+    await mongo_db.insert_upload(response_data)
 
 # Start command handler
 @app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
-    # Insert or update user info in the database
     user_id = message.from_user.id
-    await mongo_db.add_user(user_id)  # Assuming you have this function
+    user_data = {
+        "user_id": user_id,
+        "first_name": message.from_user.first_name,
+        "last_name": message.from_user.last_name,
+        "username": message.from_user.username,
+        "upload_count": 0,  # Default upload count
+        "start_time": message.date  # Record when the user started
+    }
+    
+    # Add or update user info in the database
+    await mongo_db.add_or_update_user(user_data)  # New method to handle this
+
     await start_handler(client, message)
 
 # Help command handler
