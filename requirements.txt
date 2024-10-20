@@ -6,3 +6,4 @@ tgcrypto  # Add this for better performance
 dnspython  # Required for mongodb+srv
 Flask==2.3.2  # Specify the version of Flask you want to use
 gunicorn==20.1.0
+motor==2.5.1
