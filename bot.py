@@ -17,9 +17,7 @@ API_ID = os.getenv('API_ID', 'your_api_id')
 API_HASH = os.getenv('API_HASH', 'your_api_hash')
 BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
-
-# Define your log group ID
-LOG_GROUP_ID = -1002395548077 # Replace with your actual log group ID
+LOG_GROUP_ID = int(os.getenv('LOG_GROUP_ID', 'your_log_group_id'))  # Add your log group ID here
 
 # Create Pyrogram client
 app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
@@ -37,13 +35,13 @@ def run_flask():
 # Run Flask server in a separate thread
 Thread(target=run_flask, daemon=True).start()
 
-# Function to log new users
+# Log new user function
 async def log_new_user(user_id, username):
-    message = f"New user 😗\n\nId: {user_id}\nUsername: @{username}\n#new_user"
+    message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
     try:
-        await app.send_message(LOG_GROUP_ID, message)
+        await app.send_message(LOG_GROUP_ID, message)  # Send the log message to the log group
     except Exception as e:
-        print(f"Error sending log message: {e}")
+        print("Error sending log message:", e)
 
 # Photo handler
 @app.on_message(filters.photo)
@@ -69,9 +67,17 @@ async def start_command(client: Client, message):
     }
     
     try:
-        await mongo_db.insert_user(user_id)  # Ensure this method exists in your MongoDB class
-        print("User data updated:", user_data)
-        await log_new_user(user_id, username)  # Log the new user
+        # Check if the user already exists in the database
+        existing_user = await mongo_db.users_collection.find_one({"user_id": user_id})
+        
+        if existing_user is None:
+            # If user does not exist, insert new user and log it
+            await mongo_db.insert_user(user_id)  # Ensure this method exists in your MongoDB class
+            print("User data updated:", user_data)
+            await log_new_user(user_id, username)  # Log the new user
+        else:
+            print("User already exists in the database:", user_data)
+
     except Exception as e:
         print("Error updating user data:", e)
     
@@ -98,7 +104,7 @@ async def stats_cmd(client: Client, message):
             f"Bot Statistics:\n"
             f"Total Users: {total_users}\n"
             f"Total Uploads: {len(total_uploads)}"  # Assuming get_all_uploads returns a list
-        )
+        )  # Removed parse_mode
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")  # Log the error for debugging
@@ -124,9 +130,6 @@ async def broadcast_cmd(client: Client, message):
                     await client.send_message(user_id, content)
             except Exception as e:
                 print(f"Failed to send message to {user_id}: {e}")
-
-    else:
-        await message.reply("Please reply to the message you want to broadcast.")
 
 if __name__ == "__main__":
     # Add a delay before starting your bot
