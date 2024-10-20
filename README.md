@@ -70,8 +70,7 @@ docker run -e API_ID -e API_HASH -e BOT_TOKEN -e MONGO_URI imagehost
 3. Use the button below to deploy to Koyeb:
 
 
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=imagehost&type=git&repository=utkarshdubey2008%2Fimagehost&branch=main&builder=buildpack&run_command=python+bot.py&env%5BADMIN_ID%5D=1852362865&env%5BAPI_HASH%5D=a9c08aae19aa4c8b37ff658d1951a1f7&env%5BAPI_ID%5D=7721764&env%5BBOT_IMAGE_URL%5D=https%3A%2F%2Fenvs.sh%2FpQp.jpg&env%5BBOT_TOKEN%5D=8111844369%3AAAF03mnsGLxVz131W4UkUm_mgqxk5nw7nUM&env%5BMONGODB_URL%5D=mongodb%2Bsrv%3A%2F%2Fmongodbfor1%3Amongo1%40cluster0.11liq.mongodb.net%2F%3FretryWrites%3Dtrue%26w%3Dmajority%26appName%3DCluster0&ports=8080%3Bhttp%3B%2F)
-
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?name=imagehost&type=git&repository=THEALPHABOTZ%2Fimagehost&branch=main&builder=buildpack&env%5B%5D=&ports=8000%3Bhttp%3B%2F)
 
 
 ---
