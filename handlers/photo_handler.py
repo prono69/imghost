@@ -24,7 +24,7 @@ async def upload_file_to_envs(file_content: BytesIO):
 @Client.on_message(filters.photo)
 async def handle_photo(client: Client, message: Message):
     try:
-        temp_message = await message.reply("⚡ Processing your image...")
+        temp_message = await message.reply("⚡")
         photo_file_path = await message.download()
 
         with open(photo_file_path, 'rb') as f:
