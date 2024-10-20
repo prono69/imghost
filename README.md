@@ -1,5 +1,7 @@
 ## 🖼️ Image Hosting Bot
 
+[Image host](https://envs.sh/pqu.jpg)
+
 Welcome to the Image Hosting Bot, a powerful and user-friendly Telegram bot designed to help you easily upload images and receive instant links to share with your friends and family! 🚀
 
 ## 👨‍💻 Developers
