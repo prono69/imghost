@@ -65,7 +65,7 @@ async def stats_cmd(client: Client, message):
             f"**Bot Statistics:**\n"
             f"Total Users: {total_users}\n"
             f"Total Uploads: {len(total_uploads)}",  # Assuming get_all_uploads returns a list
-            parse_mode="Markdown"
+            parse_mode="MarkdownV2"  # Changed from "Markdown" to "MarkdownV2"
         )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
