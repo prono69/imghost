@@ -1,7 +1,12 @@
+import asyncio
 from .mongo_db import mongo_db, connect_to_mongodb
 
-# Connect to MongoDB when the module is loaded
-connect_to_mongodb()
+async def initialize_db():
+    """Connect to MongoDB when the module is loaded."""
+    await connect_to_mongodb()
+
+# Call the async initialize_db function at startup
+asyncio.run(initialize_db())
 
 def save_image_url(file_url):
     """Save an image URL to the database."""
