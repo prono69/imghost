@@ -22,7 +22,7 @@ async def upload_file_to_envs(file_content: BytesIO):
 
 # Upload to IMGBB
 async def upload_file_to_imbb(file_content: BytesIO):
-    imgbb_api_key = os.getenv("IMGBB_API_KEY")  # Retrieve your IMGBB API key from environment variables
+    imgbb_api_key = os.getenv("d8271e879cd79d8a20948f1b7c48c4b5")  # Retrieve your IMGBB API key from environment variables
     async with httpx.AsyncClient() as client:
         files = {'image': file_content.getvalue()}
         try:
