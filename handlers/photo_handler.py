@@ -1,9 +1,11 @@
 import os
 import httpx
 from io import BytesIO
+from httpx import HTTPStatusError
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from db.mongo_db import mongo_db  # MongoDB handler
+from config import IMGBB_API_KEY
 
 # Upload to Envs.sh
 async def upload_file_to_envs(file_content: BytesIO):
@@ -18,11 +20,12 @@ async def upload_file_to_envs(file_content: BytesIO):
             return None
         except Exception as e:
             print(f"An error occurred: {e}")
+            traceback.print_exc()
             return None
 
 # Upload to IMGBB
 async def upload_file_to_imbb(file_content: BytesIO):
-    imgbb_api_key = os.getenv("d8271e879cd79d8a20948f1b7c48c4b5")  # Retrieve your IMGBB API key from environment variables
+    imgbb_api_key = IMGBB_API_KEY  # Ensure the key is in environment variables
     async with httpx.AsyncClient() as client:
         files = {'image': file_content.getvalue()}
         try:
@@ -34,6 +37,7 @@ async def upload_file_to_imbb(file_content: BytesIO):
             return None
         except Exception as e:
             print(f"An error occurred: {e}")
+            traceback.print_exc()
             return None
 
 # Photo handler with hosting options
@@ -55,7 +59,8 @@ async def on_callback_query(client: Client, callback_query):
     photo_file_path = await callback_query.message.reply_to_message.download()
     with open(photo_file_path, 'rb') as f:
         photo_bytes = BytesIO(f.read())
-    
+        photo_bytes.seek(0)  # Reset pointer to the beginning
+
     temp_message = await callback_query.message.reply("⚡ Uploading your image...")
     if user_choice == "upload_envs":
         response_data = await upload_file_to_envs(photo_bytes)
@@ -74,4 +79,5 @@ async def on_callback_query(client: Client, callback_query):
         await temp_message.edit("Failed to upload the image. Please try again.")
 
     # Clean up downloaded file
-    os.remove(photo_file_path)
+    if os.path.exists(photo_file_path):
+        os.remove(photo_file_path)
