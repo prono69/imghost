@@ -84,5 +84,3 @@ async def connect_to_mongodb():
 
 
 mongo_db = MongoDB(MONGODB_URL)
-
-My mongo_db.py and wait I am giving my init then analyse the codes and then give updated codes ok?

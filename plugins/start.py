@@ -7,12 +7,12 @@ async def start_handler(client: Client, message):
     bot_image_url = BOT_IMAGE_URL
     buttons = [
         [
-            InlineKeyboardButton("Updates🔊", url="https://t.me/Thealphabotz"),  
-            InlineKeyboardButton("Support🧑‍🔧", url="https://t.me/alphabotzchat")
+            InlineKeyboardButton("Updates🔊", url="https://t.me/Neko_Drive"),  
+            InlineKeyboardButton("Support🧑‍🔧", url="https://t.me/kirito6969")
         ],
         [
-            InlineKeyboardButton("donate🥺", url="https://t.me/adarsh2626"),  
-            InlineKeyboardButton("Source", url="https://t.me/alphabotzchat/599")
+            InlineKeyboardButton("donate🥺", url="https://t.me/kirito6969"),  
+            InlineKeyboardButton("Source", url="https://t.me/Neko_Drive")
         ]
     ]
     
