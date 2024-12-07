@@ -7,13 +7,17 @@ from plugins.start import start_handler
 from plugins.help import help_handler
 from db.mongo_db import mongo_db
 from config import ADMIN_ID, LOG_GROUP_ID
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
     try:
         await Client.send_message(LOG_GROUP_ID, message)
     except Exception as e:
-        print("Error sending log message:", e)
+        logger.error("Error sending log message:", e)
 
 @Client.on_message(filters.photo)
 async def photo_handler(client: Client, message):
@@ -35,13 +39,13 @@ async def start_command(client: Client, message):
         
         if existing_user is None:
             await mongo_db.insert_user(user_id)
-            print("User data updated:", user_data)
+            logger.error("User data updated:", user_data)
             await log_new_user(user_id, username)
         else:
-            print("User already exists in the database:", user_data)
+            logger.error("User already exists in the database:", user_data)
 
     except Exception as e:
-        print("Error updating user data:", e)
+        logger.error("Error updating user data:", e)
     
     await start_handler(client, message)
 
@@ -66,7 +70,7 @@ async def stats_cmd(client: Client, message):
         )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
-        print(f"Error fetching stats: {e}")
+        logger.error(f"Error fetching stats: {e}")
 
 @Client.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
@@ -86,5 +90,5 @@ async def broadcast_cmd(client: Client, message):
                 else:
                     await client.send_message(user_id, content)
             except Exception as e:
-                print(f"Failed to send message to {user_id}: {e}")
+                logger.error(f"Failed to send message to {user_id}: {e}")
 
