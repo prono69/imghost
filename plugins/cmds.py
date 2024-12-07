@@ -11,16 +11,16 @@ from config import ADMIN_ID
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
     try:
-        await app.send_message(LOG_GROUP_ID, message)
+        await Client.send_message(LOG_GROUP_ID, message)
     except Exception as e:
         print("Error sending log message:", e)
 
-@app.on_message(filters.photo)
+@Client.on_message(filters.photo)
 async def photo_handler(client: Client, message):
     response_data = await handle_photo(client, message)
     await mongo_db.insert_upload(response_data)
 
-@app.on_message(filters.command("start"))
+@Client.on_message(filters.command("start"))
 async def start_command(client: Client, message):
     user_id = message.from_user.id
     username = message.from_user.username or "N/A"
@@ -45,15 +45,15 @@ async def start_command(client: Client, message):
     
     await start_handler(client, message)
 
-@app.on_message(filters.command("help"))
+@Client.on_message(filters.command("help"))
 async def help_cmd(client: Client, message):
     await help_handler(client, message)
 
-@app.on_message(filters.command("return"))
+@Client.on_message(filters.command("return"))
 async def return_command(client: Client, message):
     await start_handler(client, message)
 
-@app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
+@Client.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
     try:
         total_users = await mongo_db.get_total_users()
@@ -68,7 +68,7 @@ async def stats_cmd(client: Client, message):
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")
 
-@app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
+@Client.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
     if message.reply_to_message:
         reply_message = message.reply_to_message
