@@ -16,7 +16,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
 LOG_GROUP_ID = -1001684936508
 
-# app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
@@ -102,7 +102,6 @@ if __name__ == "__main__":
     asyncio.set_event_loop(asyncio.new_event_loop())
 
     retries = 5
-    app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
     for attempt in range(retries):
         try:
