@@ -1,12 +1,11 @@
 import os
 import time
 import asyncio
-from pyrogram import Client, filters
+from pyrogram import Client, filters, __version__
 from dotenv import load_dotenv
-from handlers.photo_handler import handle_photo
-from plugins.start import start_handler
-from plugins.help import help_handler
-from db import mongo_db
+from datetime import datetime
+from pytz import timezone
+from pyrogram.raw.all import layer
 
 load_dotenv()
 
@@ -16,86 +15,37 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
 LOG_GROUP_ID = -1001684936508
 
-app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+# app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
-async def log_new_user(user_id, username):
-    message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
-    try:
-        await app.send_message(LOG_GROUP_ID, message)
-    except Exception as e:
-        print("Error sending log message:", e)
 
-@app.on_message(filters.photo)
-async def photo_handler(client: Client, message):
-    response_data = await handle_photo(client, message)
-    await mongo_db.insert_upload(response_data)
-
-@app.on_message(filters.command("start"))
-async def start_command(client: Client, message):
-    user_id = message.from_user.id
-    username = message.from_user.username or "N/A"
-
-    user_data = {
-        "user_id": user_id,
-        "username": username,
-    }
-    
-    try:
-        existing_user = await mongo_db.users_collection.find_one({"user_id": user_id})
-        
-        if existing_user is None:
-            await mongo_db.insert_user(user_id)
-            print("User data updated:", user_data)
-            await log_new_user(user_id, username)
-        else:
-            print("User already exists in the database:", user_data)
-
-    except Exception as e:
-        print("Error updating user data:", e)
-    
-    await start_handler(client, message)
-
-@app.on_message(filters.command("help"))
-async def help_cmd(client: Client, message):
-    await help_handler(client, message)
-
-@app.on_message(filters.command("return"))
-async def return_command(client: Client, message):
-    await start_handler(client, message)
-
-@app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
-async def stats_cmd(client: Client, message):
-    try:
-        total_users = await mongo_db.get_total_users()
-        total_uploads = await mongo_db.get_all_uploads()
-
-        await message.reply(
-            f"Bot Statistics:\n"
-            f"Total Users: {total_users}\n"
-            f"Total Uploads: {len(total_uploads)}"
+class Bot(Client):
+    def __init__(self):
+        super().__init__(
+            name="imagebot",
+            api_id=API_ID,
+            api_hash=API_HASH,
+            bot_token=BOT_TOKEN,
+            plugins={"root": "plugins"},
+            sleep_threshold=15,
         )
-    except Exception as e:
-        await message.reply("An error occurred while fetching statistics.")
-        print(f"Error fetching stats: {e}")
-
-@app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
-async def broadcast_cmd(client: Client, message):
-    if message.reply_to_message:
-        reply_message = message.reply_to_message
-        content = reply_message.caption if reply_message.caption else reply_message.text
-        media = reply_message.photo if reply_message.photo else None
-        
-        await message.reply("Broadcasting message...")
-        
-        user_ids = await mongo_db.get_all_user_ids()
-
-        for user_id in user_ids:
+ 
+    async def start(self):
+        await super().start()
+        me = await self.get_me()
+        self.mention = me.mention
+        self.username = me.username  
+            
+        print(f"\033[1;96m @{me.username} Sᴛᴀʀᴛᴇᴅ......⚡️⚡️⚡️\033[0m")
+        try: [await self.send_message(id, f"**__{me.first_name}  Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**") for id in ADMIN_ID]                              
+        except: pass
+        if LOG_GROUP_ID:
             try:
-                if media:
-                    await client.send_photo(user_id, media.file_id, caption=content)
-                else:
-                    await client.send_message(user_id, content)
-            except Exception as e:
-                print(f"Failed to send message to {user_id}: {e}")
-
-app.run()
+                curr = datetime.now(timezone("Asia/Kolkata"))
+                date = curr.strftime('%d %B, %Y')
+                time = curr.strftime('%I:%M:%S %p')
+                await self.send_message(LOG_GROUP_ID, f"**__{me.mention} Iꜱ Rᴇsᴛᴀʀᴛᴇᴅ !!**\n\n📅 Dᴀᴛᴇ : `{date}`\n⏰ Tɪᴍᴇ : `{time}`\n🌐 Tɪᴍᴇᴢᴏɴᴇ : `Asia/Kolkata`\n\n🉐 Vᴇʀsɪᴏɴ : `v{__version__} (Layer {layer})`</b>")                                
+            except:
+                print("Pʟᴇᴀꜱᴇ Mᴀᴋᴇ Tʜɪꜱ Iꜱ Aᴅᴍɪɴ Iɴ Yᴏᴜʀ Lᴏɢ Cʜᴀɴɴᴇʟ")
+ 
+ 
+Bot().run()
