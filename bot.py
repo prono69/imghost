@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 from pyrogram import Client, filters
 from dotenv import load_dotenv
 from handlers.photo_handler import handle_photo
@@ -15,7 +16,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
 LOG_GROUP_ID = -1001684936508
 
-app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+# app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
@@ -98,13 +99,16 @@ async def broadcast_cmd(client: Client, message):
                 print(f"Failed to send message to {user_id}: {e}")
 
 if __name__ == "__main__":
-    time.sleep(10)
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
     retries = 5
+    app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+
     for attempt in range(retries):
         try:
+            print("Starting the bot...")
             app.run()
-            break
+            break  # Exit the loop if `app.run()` starts successfully
         except Exception as e:
             print(f"Error: {e}. Attempt {attempt + 1} of {retries}")
             time.sleep(5)
