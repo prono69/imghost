@@ -77,3 +77,7 @@ class MongoDB:
 
 # MongoDB instance
 mongo_db = MongoDB(MONGODB_URL)
+
+async def connect_to_mongodb():
+    """Connect to MongoDB and return the MongoDB instance."""
+    return MongoDB(MONGODB_URL)
