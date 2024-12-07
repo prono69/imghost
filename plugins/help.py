@@ -12,12 +12,12 @@ async def help_handler(client: Client, message):
 
     # Send help menu message
     await message.reply(
-        "Here are some commands you can use:\n"
-        "/start - Start the bot\n"
-        "/help - Get help with commands\n"
-        "/stats - View bot statistics (Admin only)\n"
-        "/broadcast - Broadcast a message to all users (Admin only)\n"
-        "Send me a photo to upload it and I'll provide a shareable link.\n",
+        "**Here are some commands you can use:**\n"
+        "/start - __Start the bot__\n"
+        "/help - __Get help with commands__\n"
+        "/stats - __View bot statistics (Admin only)__\n"
+        "/broadcast - __Broadcast a message to all users (Admin only)__\n\n"
+        "**Send me a photo to upload it and I'll provide a shareable link.**\n",
         reply_markup=reply_markup
     )
 

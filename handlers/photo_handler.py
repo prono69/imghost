@@ -43,7 +43,7 @@ async def upload_file_to_imbb(file_content: BytesIO):
 @Client.on_message(filters.photo)
 async def handle_photo(client: Client, message: Message):
     try:
-        temp_message = await message.reply("⚡")
+        temp_message = await message.reply("<b><i>Uploading your photo ⚡</i></b>")
         photo_file_path = await message.download()
  
         with open(photo_file_path, 'rb') as f:
@@ -57,7 +57,7 @@ async def handle_photo(client: Client, message: Message):
             credit_message = "> Bot by: @Neko_Drive"
             final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
             await temp_message.edit(final_message)
-            await mongo_db.insert_upload(response_data)
+            await mongo_db.insert_upload(response_data, disable_web_page_preview=True)
         else:
             await temp_message.edit("Failed to get the URL from envs.sh. Invalid response format.")
  

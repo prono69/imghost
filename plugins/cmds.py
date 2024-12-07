@@ -56,7 +56,7 @@ async def return_command(client: Client, message):
 @Client.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
     try:
-        total_users = await mongo_db.get_total_users()
+        total_users = await mongo_db.count_users()
         total_uploads = await mongo_db.get_all_uploads()
 
         await message.reply(
