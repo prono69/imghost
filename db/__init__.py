@@ -1,7 +1,7 @@
 from .mongo_db import mongo_db, connect_to_mongodb
 import logging
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
  
 async def save_image_url(file_url):

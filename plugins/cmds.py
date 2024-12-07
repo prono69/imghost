@@ -9,7 +9,7 @@ from db.mongo_db import mongo_db
 from config import ADMIN_ID, LOG_GROUP_ID
 import logging
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def log_new_user(user_id, username):
@@ -39,10 +39,10 @@ async def start_command(client: Client, message):
         
         if existing_user is None:
             await mongo_db.insert_user(user_id)
-            logger.error("User data updated:", user_data)
+            logger.info("User data updated:", user_data)
             await log_new_user(user_id, username)
         else:
-            logger.error("User already exists in the database:", user_data)
+            logger.info("User already exists in the database:", user_data)
 
     except Exception as e:
         logger.error("Error updating user data:", e)
