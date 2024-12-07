@@ -1,13 +1,13 @@
 import asyncio
 import logging
-from .mongo_db import connect_to_mongodb
+from .mongo_db import mongo_db, connect_to_mongodb
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Global MongoDB instance
-mongo_db = None
+# mongo_db = None
 
 async def initialize_db():
     """Connect to MongoDB when the module is loaded."""

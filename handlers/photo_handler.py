@@ -1,7 +1,7 @@
 import os
 import httpx
 from io import BytesIO
-from httpx import HTTPStatusError
+from httpx import HTTPStatusError, ConnectError
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from db.mongo_db import mongo_db  # MongoDB handler
@@ -40,44 +40,35 @@ async def upload_file_to_imbb(file_content: BytesIO):
             traceback.print_exc()
             return None
 
-# Photo handler with hosting options
 @Client.on_message(filters.photo)
 async def handle_photo(client: Client, message: Message):
-    buttons = [
-        [InlineKeyboardButton("Envs", callback_data="upload_envs")],
-        [InlineKeyboardButton("IMGBB", callback_data="upload_imbb")]
-    ]
-    await message.reply("Choose the hosting provider:", reply_markup=InlineKeyboardMarkup(buttons))
-
-# Callback query handler
-@Client.on_callback_query(filters.regex("upload_"))
-async def on_callback_query(client: Client, callback_query):
-    user_choice = callback_query.data
-    await callback_query.answer()
-    
-    # Download the photo file
-    photo_file_path = await callback_query.message.reply_to_message.download()
-    with open(photo_file_path, 'rb') as f:
-        photo_bytes = BytesIO(f.read())
-        photo_bytes.seek(0)  # Reset pointer to the beginning
-
-    temp_message = await callback_query.message.reply("⚡ Uploading your image...")
-    if user_choice == "upload_envs":
+    try:
+        temp_message = await message.reply("⚡")
+        photo_file_path = await message.download()
+ 
+        with open(photo_file_path, 'rb') as f:
+            photo_bytes = BytesIO(f.read())
+            photo_bytes.seek(0)  # Reset pointer to the beginning
+ 
         response_data = await upload_file_to_envs(photo_bytes)
-    elif user_choice == "upload_imbb":
-        response_data = await upload_file_to_imbb(photo_bytes)
-
-    if response_data:
-        formatted_link = f"Link: {response_data}\nClick to copy: `{response_data}`\n\n"
-        credit_message = "> Bot by: @thealphabotz"
-        final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
-        await temp_message.edit(final_message)
-
-        # Insert the uploaded file's URL into MongoDB
-        await mongo_db.insert_upload(response_data)
-    else:
-        await temp_message.edit("Failed to upload the image. Please try again.")
-
-    # Clean up downloaded file
+ 
+        if response_data:
+            formatted_link = f"Link: {response_data}\nClick to copy: `{response_data}`\n\n"
+            credit_message = "> Bot by: @Neko_Drive"
+            final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
+            await temp_message.edit(final_message)
+            await mongo_db.insert_upload(response_data)
+        else:
+            await temp_message.edit("Failed to get the URL from envs.sh. Invalid response format.")
+ 
+    except ConnectError:
+        await message.reply("Network error occurred. Please check your connection.")
+    except Exception as e:
+        await message.reply("An error occurred while processing your request.")
+        print("Error:", str(e))
+        
     if os.path.exists(photo_file_path):
-        os.remove(photo_file_path)
+      os.remove(photo_file_path)
+    
+        
+       
