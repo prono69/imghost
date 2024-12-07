@@ -16,7 +16,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', 'your_bot_token')
 ADMIN_ID = int(os.getenv('ADMIN_ID', 'your_admin_id'))
 LOG_GROUP_ID = -1001684936508
 
-# app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
+app = Client("my_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
 
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
@@ -25,12 +25,12 @@ async def log_new_user(user_id, username):
     except Exception as e:
         print("Error sending log message:", e)
 
-@Client.on_message(filters.photo)
+@app.on_message(filters.photo)
 async def photo_handler(client: Client, message):
     response_data = await handle_photo(client, message)
     await mongo_db.insert_upload(response_data)
 
-@Client.on_message(filters.command("start"))
+@app.on_message(filters.command("start"))
 async def start_command(client: Client, message):
     user_id = message.from_user.id
     username = message.from_user.username or "N/A"
@@ -55,15 +55,15 @@ async def start_command(client: Client, message):
     
     await start_handler(client, message)
 
-@Client.on_message(filters.command("help"))
+@app.on_message(filters.command("help"))
 async def help_cmd(client: Client, message):
     await help_handler(client, message)
 
-@Client.on_message(filters.command("return"))
+@app.on_message(filters.command("return"))
 async def return_command(client: Client, message):
     await start_handler(client, message)
 
-@Client.on_message(filters.command("stats") & filters.user(ADMIN_ID))
+@app.on_message(filters.command("stats") & filters.user(ADMIN_ID))
 async def stats_cmd(client: Client, message):
     try:
         total_users = await mongo_db.get_total_users()
@@ -78,7 +78,7 @@ async def stats_cmd(client: Client, message):
         await message.reply("An error occurred while fetching statistics.")
         print(f"Error fetching stats: {e}")
 
-@Client.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
+@app.on_message(filters.command("broadcast") & filters.user(ADMIN_ID))
 async def broadcast_cmd(client: Client, message):
     if message.reply_to_message:
         reply_message = message.reply_to_message
@@ -98,17 +98,4 @@ async def broadcast_cmd(client: Client, message):
             except Exception as e:
                 print(f"Failed to send message to {user_id}: {e}")
 
-if __name__ == "__main__":
-    asyncio.set_event_loop(asyncio.new_event_loop())
-
-    retries = 5
-    app = Client("img_bot", bot_token=BOT_TOKEN, api_id=API_ID, api_hash=API_HASH)
-
-    for attempt in range(retries):
-        try:
-            print("Starting the bot...")
-            app.run()
-            break  # Exit the loop if `app.run()` starts successfully
-        except Exception as e:
-            print(f"Error: {e}. Attempt {attempt + 1} of {retries}")
-            time.sleep(5)
+app.run()
