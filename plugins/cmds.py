@@ -5,8 +5,8 @@ from pyrogram import Client, filters
 from handlers.photo_handler import handle_photo
 from plugins.start import start_handler
 from plugins.help import help_handler
-from db import mongo_db
-from config import ADMIN_ID
+from db.mongo_db import mongo_db
+from config import ADMIN_ID, LOG_GROUP_ID
 
 async def log_new_user(user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"

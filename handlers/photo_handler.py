@@ -56,8 +56,8 @@ async def handle_photo(client: Client, message: Message):
             formatted_link = f"Link: {response_data}\nClick to copy: `{response_data}`\n\n"
             credit_message = "> Bot by: @Neko_Drive"
             final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
-            await temp_message.edit(final_message)
-            await mongo_db.insert_upload(response_data, disable_web_page_preview=True)
+            await temp_message.edit(final_message, disable_web_page_preview=True)
+            await mongo_db.insert_upload(response_data)
         else:
             await temp_message.edit("Failed to get the URL from envs.sh. Invalid response format.")
  
