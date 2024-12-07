@@ -10,3 +10,4 @@ MONGODB_URL = os.getenv('MONGODB_URL', 'your_mongodb_url')  # MongoDB URL
 ADMIN_ID = os.getenv('ADMIN_ID', 'your_admin_id')  # Add admin ID
 BOT_IMAGE_URL = os.getenv('BOT_IMAGE_URL', 'https://envs.sh/WKQ.jpg')  # Bot's image URL
 IMGBB_API_KEY = os.getenv("IMGBB_API_KEY", "d8271e879cd79d8a20948f1b7c48c4b5")
+LOG_GROUP_ID = -1001684936508
