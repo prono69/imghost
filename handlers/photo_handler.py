@@ -4,7 +4,7 @@ from io import BytesIO
 from httpx import HTTPStatusError, ConnectError
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
-from db import mongo_db  # MongoDB handler
+from db.mongo_db import mongo_db
 from config import IMGBB_API_KEY
 
 # Upload to Envs.sh
