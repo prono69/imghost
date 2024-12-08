@@ -8,10 +8,10 @@ async def start_handler(client: Client, message):
     buttons = [
         [
             InlineKeyboardButton("Updates🔊", url="https://t.me/Neko_Drive"),  
-            InlineKeyboardButton("Support🧑‍🔧", url="https://t.me/kirito6969")
+            InlineKeyboardButton("Support🧑‍🔧", url="https://t.me/NeoMatrix90")
         ],
         [
-            InlineKeyboardButton("donate🥺", url="https://t.me/kirito6969"),  
+            InlineKeyboardButton("donate🥺", url="https://t.me/NeoMatrix90"),  
             InlineKeyboardButton("Source", url="https://t.me/Neko_Drive")
         ]
     ]
@@ -21,9 +21,9 @@ async def start_handler(client: Client, message):
     await message.reply_photo(
         photo=bot_image_url,
         caption=(
-            "Welcome to ImageHost Bot! Send me an image, and I'll upload it for you.\n\n"
-            "I can help you host your images and provide you with a shareable link.\n"
-            "Feel free to reach out if you have any questions!"
+            "__Welcome to ImageHost Bot! Send me an image, and I'll upload it for you.__\n\n"
+            "__I can help you host your images and provide you with a shareable link.__\n"
+            "__Feel free to reach out if you have any questions!__"
         ),
         reply_markup=reply_markup  # Pass the properly structured reply markup
     )

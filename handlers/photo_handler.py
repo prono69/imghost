@@ -53,9 +53,9 @@ async def handle_photo(client: Client, message: Message):
         response_data = await upload_file_to_envs(photo_bytes)
  
         if response_data:
-            formatted_link = f"Link: {response_data}\nClick to copy: `{response_data}`\n\n"
-            credit_message = "> Bot by: @Neko_Drive"
-            final_message = f"Your image uploaded successfully 🙃.\n\n{formatted_link}{credit_message}"
+            formatted_link = f"🔗 <b>Link:</b> {response_data}\n<b>Click to copy:</b> `{response_data}`\n\n"
+            credit_message = "🤴 <b>Bot by:</b> <i>@Neko_Drive</i>"
+            final_message = f"✘ <b><i>Your image uploaded successfully 🙃.</i></b>\n\n{formatted_link}{credit_message}"
             await temp_message.edit(final_message, disable_web_page_preview=True)
             await mongo_db.insert_upload(response_data)
         else:
