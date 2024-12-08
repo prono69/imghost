@@ -1,4 +1,5 @@
 import io
+import os
 import sys
 import traceback
 from pyrogram import Client, filters
@@ -49,13 +50,14 @@ async def eval(client, message):
 
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with io.BytesIO(str.encode(final_output)) as out_file:
-            out_file.name = "eval.text"
+            out_file.name = "eval.txt"
             await reply_to_.reply_document(
                 document=out_file,
                 caption=cmd[: MAX_MESSAGE_LENGTH // 4 - 1],
                 disable_notification=True,
                 quote=True,
             )
+            os.remove("eval.txt")
     else:
         await reply_to_.reply_text(final_output, quote=True)
     await status_message.delete()

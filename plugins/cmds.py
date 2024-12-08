@@ -64,9 +64,9 @@ async def stats_cmd(client: Client, message):
         total_uploads = await mongo_db.get_all_uploads()
 
         await message.reply(
-            f"Bot Statistics:\n"
-            f"Total Users: {total_users}\n"
-            f"Total Uploads: {len(total_uploads)}"
+            f"<b><i>✘ Bot Statistics:</i></b>\n\n"
+            f"🙎‍♂️ **Total Users:** `{total_users}`\n"
+            f"⏫ **Total Uploads:** `{len(total_uploads)}`"
         )
     except Exception as e:
         await message.reply("An error occurred while fetching statistics.")
