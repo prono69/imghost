@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-@Client.on_message(filters.command("help"))
+# @Client.on_message(filters.command("help"))
 async def help_handler(client: Client, message):
     
     buttons = [

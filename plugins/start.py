@@ -1,8 +1,8 @@
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from config import BOT_IMAGE_URL
 
-@Client.on_message(filters.command("start"))
+# @Client.on_message(filters.command("start"))
 async def start_handler(client: Client, message):
     bot_image_url = BOT_IMAGE_URL
     buttons = [

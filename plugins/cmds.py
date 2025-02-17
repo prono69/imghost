@@ -25,7 +25,7 @@ async def photo_handler(client: Client, message):
     await mongo_db.insert_upload(response_data)
 
 @Client.on_message(filters.command("start"))
-async def start_command(client, message):
+async def start_command(client: Client, message):
     user_id = message.from_user.id
     username = message.from_user.username or "N/A"
 
