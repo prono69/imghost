@@ -12,10 +12,10 @@ import logging
 # logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-async def log_new_user(user_id, username):
+async def log_new_user(client, user_id, username):
     message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
     try:
-        await Client.send_message(LOG_GROUP_ID, message)
+        await client.send_message(LOG_GROUP_ID, message)
     except Exception as e:
         logger.error("Error sending log message:", e)
 
@@ -25,7 +25,7 @@ async def photo_handler(client: Client, message):
     await mongo_db.insert_upload(response_data)
 
 @Client.on_message(filters.command("start"))
-async def start_command(client: Client, message):
+async def start_command(client, message):
     user_id = message.from_user.id
     username = message.from_user.username or "N/A"
 
@@ -40,7 +40,7 @@ async def start_command(client: Client, message):
         if existing_user is None:
             await mongo_db.insert_user(user_id)
             logger.info("User data updated:", user_data)
-            await log_new_user(user_id, username)
+            await log_new_user(client, user_id, username)
         else:
             logger.info("User already exists in the database:", user_data)
 
