@@ -7,7 +7,7 @@ from config import ADMIN_ID
 MAX_MESSAGE_LENGTH = 4096
 
 
-@Client.on_message(filters.command("exec") & filters.user(ADMIN_ID))
+@Client.on_message(filters.command("bash") & filters.user(ADMIN_ID))
 async def execution(_, message):
     status_message = await message.reply_text("Processing ...")
     # DELAY_BETWEEN_EDITS = 0.3

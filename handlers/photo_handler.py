@@ -70,5 +70,3 @@ async def handle_photo(client: Client, message: Message):
     if os.path.exists(photo_file_path):
       os.remove(photo_file_path)
     
-        
-       

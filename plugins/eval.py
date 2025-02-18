@@ -7,10 +7,9 @@ from config import ADMIN_ID
 
 MAX_MESSAGE_LENGTH = 4096
 
-
 @Client.on_message(filters.command("eval") & filters.user(ADMIN_ID))
 async def eval(client, message):
-    status_message = await message.reply_text("Processing ...")
+    status_message = await message.reply_text("__Processing ...__")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_ = message
@@ -65,7 +64,19 @@ async def eval(client, message):
 
 async def aexec(code, client, message):
     exec(
-        "async def __aexec(client, message): "
-        + "".join(f"\n {l_}" for l_ in code.split("\n"))
+        (
+            "async def __aexec(client, message):\n"
+            + " import os\n"
+            + " import wget\n"
+            + " neo = message\n"
+            + " e = message = event = neo\n"
+            + " r = reply = message.reply_to_message\n"
+            + " chat = message.chat.id\n"
+            + " c = client\n"
+            + " to_photo = message.reply_photo\n"
+            + " to_video = message.reply_video\n"
+            + " p = print\n"
+        )
+        + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](client, message)

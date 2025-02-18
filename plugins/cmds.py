@@ -27,8 +27,8 @@ async def log_new_user(client, user_id, username):
         
 @Client.on_message(filters.photo)
 async def photo_handler(client: Client, message):
-    response_data = await handle_photo(client, message)
-    await mongo_db.insert_upload(response_data)
+    await handle_photo(client, message)
+    # await mongo_db.insert_upload(response_data)
 
 @Client.on_message(filters.command("start"))
 async def start_command(client: Client, message):
