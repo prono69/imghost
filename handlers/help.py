@@ -1,8 +1,7 @@
-from pyrogram import Client, filters
+from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# @Client.on_message(filters.command("help"))
-async def help_handler(client: Client, message):
+async def help_handler(client, message):
     
     buttons = [
         [InlineKeyboardButton("Close", callback_data="close")]  # Close button to delete the message
@@ -22,6 +21,6 @@ async def help_handler(client: Client, message):
     )
 
 @Client.on_callback_query(filters.regex("close"))
-async def close_help(client: Client, callback_query):
+async def close_help(client, callback_query):
     await callback_query.message.delete()  # Delete the help menu message
     await callback_query.answer()  # Acknowledge the callback query

@@ -40,7 +40,7 @@ async def upload_file_to_imbb(file_content: BytesIO):
             traceback.print_exc()
             return None
 
-# @Client.on_message(filters.photo)
+
 async def handle_photo(client: Client, message: Message):
     try:
         temp_message = await message.reply("<b><i>Uploading your photo ⚡</i></b>")

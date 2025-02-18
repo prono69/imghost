@@ -3,8 +3,8 @@ import time
 import asyncio
 from pyrogram import Client, filters
 from handlers.photo_handler import handle_photo
-from plugins.start import start_handler
-from plugins.help import help_handler
+from handlers.start import start_handler
+from handlers.help import help_handler
 from db.mongo_db import mongo_db
 from config import ADMIN_ID, LOG_GROUP_ID
 import logging
@@ -13,12 +13,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 async def log_new_user(client, user_id, username):
-    message = f"New user 😗\nId: {user_id}\nUsername: {username}\n#new_user"
+    message = (
+        "<b>✨ New User Alert! ✨</b>\n\n"
+        f"<b>🆔 User ID:</b> <code>{user_id}</code>\n"
+        f"<b>👤 Username:</b> @{username}\n\n"
+        "#new_user"
+    )
     try:
         await client.send_message(LOG_GROUP_ID, message)
     except Exception as e:
         logger.error("Error sending log message:", e)
-
+        
+        
 @Client.on_message(filters.photo)
 async def photo_handler(client: Client, message):
     response_data = await handle_photo(client, message)
